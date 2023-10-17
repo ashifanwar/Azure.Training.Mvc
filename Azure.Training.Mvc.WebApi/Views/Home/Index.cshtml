@@ -5,7 +5,12 @@
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    @* <p>@Html.ActionLink("Click here to Create Employee","Create","Employees", null, new { @class = "page-scroll" })</p> *@
+    <p>@Html.ActionLink("Click here to Create Employee","Create","Employees", null, new { @class = "page-scroll" })</p>
+    @using (Html.BeginForm("Create", "Content", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <input type="file" name="ImageData" id="ImageData" />
+        <input type="submit" value="Upload" class="submit" />
+    }
 </div>
 
 <div>

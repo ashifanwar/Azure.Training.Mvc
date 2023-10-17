@@ -28,6 +28,11 @@ namespace Azure.Training.Mvc.WebApi
             services.AddControllersWithViews();
             services.AddDbContext<AzureTrainingMvcDataContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("AzureTrainingMvcDataContext")));
+            services.AddScoped(c =>
+            {
+                var blobCon = Configuration.GetConnectionString("BlobconnectionString");
+                return new BlobRepository(blobCon);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
