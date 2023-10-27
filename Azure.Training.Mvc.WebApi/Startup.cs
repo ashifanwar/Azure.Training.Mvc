@@ -10,6 +10,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Azure.Training.Mvc.WebApi.Data;
+using Microsoft.Azure.Cosmos;
+using System.Security;
 
 namespace Azure.Training.Mvc.WebApi
 {
@@ -32,6 +34,17 @@ namespace Azure.Training.Mvc.WebApi
             {
                 var blobCon = Configuration.GetConnectionString("BlobconnectionString");
                 return new BlobRepository(blobCon);
+            });
+
+            services.AddSingleton(b =>
+            {
+                var config = Configuration.GetConnectionString("Cosmosdbconnection");
+                var cosmosClientOptions = new CosmosClientOptions
+                {
+                    MaxRetryAttemptsOnRateLimitedRequests = 9,
+                    MaxRetryWaitTimeOnRateLimitedRequests = TimeSpan.FromSeconds(30)
+                };
+                return new CosmosClient(config, cosmosClientOptions);
             });
         }
 

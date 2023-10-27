@@ -14,11 +14,11 @@ namespace Azure.Training.Mvc.WebApi
             blobContainerClient.CreateIfNotExists();
             blobServiceClient = new BlobServiceClient(blobConnectionString);
         }
-        public async Task UploadAsync(byte[] blobContent)
+        public async Task UploadAsync(byte[] blobContent, string blobName)
         {
             var blobContainer = blobServiceClient.GetBlobContainerClient("azuretraining");
             await blobContainer.CreateIfNotExistsAsync().ConfigureAwait(false);
-            var blobClient = blobContainer.GetBlobClient("myimage");
+            var blobClient = blobContainer.GetBlobClient(blobName);
 
             var memoryStream = new MemoryStream(blobContent);
 
